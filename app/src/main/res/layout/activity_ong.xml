@@ -26,11 +26,14 @@
             android:layout_height="50dp"
             app:srcCompat="@drawable/logo"
             tools:layout_editor_absoluteX="15dp"
-            tools:layout_editor_absoluteY="15dp" />
+            tools:layout_editor_absoluteY="15dp"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/email"
             style="@style/edit_text"
+            android:hint="  E-mail"
+            android:inputType="textEmailAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="100dp"
@@ -42,6 +45,8 @@
         <EditText
             android:id="@+id/confirmar_email"
             style="@style/edit_text"
+            android:hint="  Confirmar e-mail"
+            android:inputType="textEmailAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="200dp"
@@ -53,6 +58,7 @@
         <EditText
             android:id="@+id/cnpj"
             style="@style/edit_text"
+            android:hint="  CNPJ"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="300dp"
@@ -86,6 +92,7 @@
         <EditText
             android:id="@+id/senha"
             style="@style/edit_text"
+            android:hint="  Senha"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="600dp"
@@ -97,6 +104,7 @@
         <EditText
             android:id="@+id/confirmar_senha"
             style="@style/edit_text"
+            android:hint="  Confirmar senha"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="700dp"
@@ -111,6 +119,7 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginTop="800dp"
+            android:layout_marginBottom="100dp"
             android:backgroundTint="@color/botao"
             android:text="Cadastre-se"
             android:textColor="@color/white"
