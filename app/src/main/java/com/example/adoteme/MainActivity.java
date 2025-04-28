@@ -1,6 +1,7 @@
 package com.example.adoteme;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonAdotante;
     private Button buttonONG;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonONG = (android.widget.Button) findViewById(R.id.buttonONG);
+        buttonONG = (Button) findViewById(R.id.buttonloginONG);
         buttonONG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ONG.class);
+                Intent intent = new Intent(MainActivity.this, login_ong.class);
                 startActivity(intent);
 
             }
