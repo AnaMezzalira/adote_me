@@ -29,11 +29,21 @@
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/nome_animal"
             style="@style/edit_text"
-            android:hint="  E-mail"
-            android:inputType="textEmailAddress"
-            android:layout_width="300dp"
+            android:hint="  Nome"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/sexo"
+            style="@style/edit_text"
+            android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="200dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,11 +52,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/senha"
+            android:id="@+id/raca"
             style="@style/edit_text"
-            android:hint="  Senha"
-            android:inputType="textEmailAddress"
-            android:layout_width="300dp"
+            android:hint="  Raça"
+            android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="300dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,15 +63,53 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/login"
-            style="@style/borda"
-            android:layout_width="150dp"
+        <EditText
+            android:id="@+id/vacina"
+            style="@style/edit_text"
+            android:hint="  Vacina"
+            android:inputType="textWebPassword"
+            android:layout_width="350dp"
             android:layout_height="50dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="400dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Spinner
+            android:id="@+id/castrado"
+            style="@style/edit_text"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="500dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/condicoes_medicas"
+            style="@style/edit_text"
+            android:hint="  Condições Médicas"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="600dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/foto"
+            style="@style/borda"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="700dp"
             android:layout_marginBottom="100dp"
             android:backgroundTint="@color/botao"
-            android:text="Login"
+            android:text="Foto"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,15 +118,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/cadastro"
+            android:id="@+id/mudanca"
             style="@style/borda"
-            android:layout_width="150dp"
+            android:layout_width="350dp"
             android:layout_height="50dp"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="900dp"
             android:layout_marginBottom="100dp"
-            android:backgroundTint="@color/white"
-            android:text="Cadastre-se"
-            android:textColor="@color/botao"
+            android:backgroundTint="@color/botao"
+            android:text="Salvar Mudanças"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
