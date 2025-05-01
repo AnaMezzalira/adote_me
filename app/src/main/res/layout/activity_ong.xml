@@ -8,7 +8,7 @@
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/nome"
+        android:id="@+id/nome_3"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/confirmar_email"
+            android:id="@+id/nome"
             style="@style/edit_text"
             android:hint="  Confirmar e-mail"
             android:inputType="textEmailAddress"
@@ -115,7 +115,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/cadastrar"
+            android:id="@+id/btnCadastrar"
             style="@style/borda"
             android:layout_width="150dp"
             android:layout_height="50dp"
