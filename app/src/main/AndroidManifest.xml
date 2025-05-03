@@ -13,6 +13,15 @@
         android:theme="@style/Theme.AdoteMe"
         tools:targetApi="31">
         <activity
+            android:name=".perfil_ong"
+            android:exported="false" />
+        <activity
+            android:name=".cadastro_ong"
+            android:exported="false" />
+        <activity
+            android:name=".cadastro_ong"
+            android:exported="false" />
+        <activity
             android:name=".cadastro_animal"
             android:exported="false" />
         <activity
@@ -20,9 +29,6 @@
             android:exported="false" />
         <activity
             android:name=".login_ong"
-            android:exported="false" />
-        <activity
-            android:name=".ONG"
             android:exported="false" />
         <activity
             android:name=".Adotante"

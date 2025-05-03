@@ -8,11 +8,12 @@
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/nome"
+        android:id="@+id/nome_3"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".login_ong">
+        tools:context=".ONG">
+
 
         <View
             android:id="@+id/view"
@@ -29,9 +30,11 @@
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/nome_animal"
+            android:id="@+id/nome"
             style="@style/edit_text"
-            android:hint="  Nome"
+            android:hint="Nome"
+            android:paddingStart="10dp"
+            android:inputType="textEmailAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="100dp"
@@ -40,9 +43,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/sexo"
+        <EditText
+            android:id="@+id/email"
             style="@style/edit_text"
+            android:hint="E-mail"
+            android:paddingStart="10dp"
+            android:inputType="textEmailAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="200dp"
@@ -52,9 +58,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/raca"
+            android:id="@+id/confirmar_email"
             style="@style/edit_text"
-            android:hint="  Raça"
+            android:hint="Confirmar e-mail"
+            android:paddingStart="10dp"
+            android:inputType="textEmailAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="300dp"
@@ -64,10 +72,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/vacina"
+            android:id="@+id/cnpj"
             style="@style/edit_text"
-            android:hint="  Vacina"
-            android:inputType="textWebPassword"
+            android:hint="CNPJ"
+            android:paddingStart="10dp"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="400dp"
@@ -76,22 +84,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <Spinner
-            android:id="@+id/castrado"
+            android:id="@+id/estado"
             style="@style/edit_text"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="500dp"
+            android:paddingStart="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/condicoes_medicas"
+            android:id="@+id/cidade"
             style="@style/edit_text"
-            android:hint="  Condições Médicas"
+            android:hint="Cidade"
+            android:paddingStart="10dp"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="600dp"
@@ -100,71 +109,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="700dp"
-            android:layout_marginEnd="50dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/foto1"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="6dp"
-                android:src="@drawable/logo" />
-
-            <ImageView
-                android:id="@+id/foto2"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="6dp"
-                android:src="@drawable/logo" />
-
-            <ImageView
-                android:id="@+id/foto3"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="6dp"
-                android:src="@drawable/logo" />
-
-            <ImageView
-                android:id="@+id/foto4"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="6dp"
-                android:src="@drawable/logo" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/selecionar_fotos"
-            style="@style/borda"
+        <EditText
+            android:id="@+id/senha"
+            style="@style/edit_text"
+            android:hint="Senha"
+            android:paddingStart="10dp"
+            android:inputType="textWebPassword"
             android:layout_width="350dp"
             android:layout_height="50dp"
-            android:layout_marginTop="750dp"
-            android:layout_marginBottom="100dp"
-            android:backgroundTint="@color/botao"
-            android:text="Selecionar Fotos"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="700dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/confirmar_senha"
+            style="@style/edit_text"
+            android:hint="Confirmar senha"
+            android:paddingStart="10dp"
+            android:inputType="textWebPassword"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="800dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/mudanca"
+            android:id="@+id/btnCadastrar"
             style="@style/borda"
-            android:layout_width="350dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginTop="900dp"
             android:layout_marginBottom="100dp"
             android:backgroundTint="@color/botao"
-            android:text="Salvar Mudanças"
+            android:text="Cadastre-se"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,3 +155,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+

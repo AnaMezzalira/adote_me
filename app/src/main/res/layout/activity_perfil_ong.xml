@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_perfil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/botao_adicionar_animal"
+        android:fillViewport="true"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- CARD DAS INFORMAÇÕES DA ONG -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/fundo"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/foto_logo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo"
+                    android:contentDescription="@string/logo_ong" />
+
+                <LinearLayout
+                    android:id="@+id/layout_infos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/foto_logo"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nome_ong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nome_ong"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/endereco"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/endereco_completo"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/telefone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/telefone_formatado"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/instagram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/instagram_usuario"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/pix1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pix1_formatado"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/pix2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pix2_formatado"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/botao_editar_info"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="100dp"
+                    android:background="@color/botao"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:contentDescription="@string/editar_informacoes" />
+            </RelativeLayout>
+
+            <!-- GRID DOS ANIMAIS -->
+            <GridView
+                android:id="@+id/grid_animais"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:horizontalSpacing="8dp"
+                android:isScrollContainer="false"
+                android:numColumns="3"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- BOTÃO FLUTUANTE POSICIONADO -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/botao_adicionar_animal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="@string/adicionar_animal"
+        android:tint="@color/white"
+        app:backgroundTint="@color/botao" />
+</RelativeLayout>
