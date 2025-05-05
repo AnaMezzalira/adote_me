@@ -87,15 +87,18 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+                <!-- Substitua o botão de edição por este -->
                 <ImageButton
                     android:id="@+id/botao_editar_info"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="100dp"
-                    android:background="@color/botao"
+                    android:backgroundTint="@color/botao"
+                    android:background="@drawable/botao_circular"
                     android:src="@android:drawable/ic_menu_edit"
                     android:contentDescription="@string/editar_informacoes" />
+
             </RelativeLayout>
 
             <!-- GRID DOS ANIMAIS -->
