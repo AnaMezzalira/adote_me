@@ -2,6 +2,7 @@ package com.example.adoteme;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class login_ong extends AppCompatActivity {
             if (db.verificarLogin(email, senha)) {
                 Intent it = new Intent(this, perfil_ong.class);
                 it.putExtra("EMAIL_ONG", email);
+                Log.d("LOGIN_ONG", "Email enviado: " + email);
                 startActivity(it);
                 finish();
             } else {

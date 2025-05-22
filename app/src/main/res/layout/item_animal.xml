@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <!-- Seta esquerda -->
+    <ImageButton
+        android:id="@+id/seta_esquerda"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="250dp"
+        android:src="@android:drawable/ic_media_previous"
+        android:contentDescription="Seta esquerda"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="true" />
+
+
+    <!-- Seta direita -->
+    <ImageButton
+        android:id="@+id/seta_direita"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="250dp"
+        android:src="@android:drawable/ic_media_next"
+        android:contentDescription="Seta direita"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="true" />
+
+    <!-- Informações abaixo da imagem -->
+    <LinearLayout
+        android:id="@+id/info_container"
+        android:layout_width="400dp"
+        android:layout_height="500dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+
+        <!-- Imagem do animal -->
+        <ImageView
+            android:id="@+id/selecionar_fotos"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/nome_animal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Rex"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/idade_animal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Idade: 2 anos"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/raca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Raça: Labrador"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/vacina"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Vacinas: Sim"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/sexo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Sexo: Macho"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/castrado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Castrado: Sim"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/condicoes_medicas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Condições médicas: Nenhuma"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_container"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="220dp"
+        android:backgroundTint="@color/botao"
+        android:text="Editar"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_container"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Remover"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
+

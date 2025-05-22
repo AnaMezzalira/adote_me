@@ -98,7 +98,7 @@ public class info_ong extends AppCompatActivity {
         telefone2.setText(info.telefone_2);
         instagram.setText(info.insta);
         pix1.setText     (info.pix_1);
-        pix2.setText     (info.pix_2);                      // ajuste se usar pix2
+        pix2.setText     (info.pix_2);
         imagemSelecionada = info.foto;
 
         if (info.foto != null) {

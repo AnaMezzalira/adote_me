@@ -1,5 +1,6 @@
 package com.example.adoteme;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -7,111 +8,126 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class perfil_ong extends AppCompatActivity {
+/** Tela de perfil da ONG */
+public class perfil_ong extends AppCompatActivity
+        implements GridAnimalAdapter.OnAnimalDeleteListener {
 
-    // --- Views do card superior ---
-    private ImageView fotoLogo;
-    private TextView  txtNome, txtEndereco, txtTelefone,
-            txtInstagram, txtPix1, txtPix2;
+    private ImageView foto;
+    private TextView  nome_ong, endereco, telefone_1,
+            insta, pix_1, pix_2;
+    private GridView grid;
+    private FloatingActionButton fabAdd;
+    private ImageButton btnEdit;
 
-    // --- Grade de animais ---
-    private GridView               gridAnimais;
-    private FloatingActionButton   botaoAdicionar;
-    private ImageButton            botaoEditar;
-    private List<Animal>           listaAnimais;
-    private GridAnimalAdapter      adapter;
+    private DatabaseHelper db;
+    private final List<Animal> lista = new ArrayList<>();
+    private GridAnimalAdapter adapter;
+    private String emailOng;
 
-    // --- Auxiliares ---
-    private DatabaseHelper  db;
-    private String          emailOng;   // recebido via Intent
+    /* ---------- Ciclo de vida ---------- */
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle b) {
+        super.onCreate(b);
         setContentView(R.layout.activity_perfil_ong);
 
-        // e‑mail da ONG logada (veio da tela de login)
+        /* e-mail enviado pela tela de login */
         emailOng = getIntent().getStringExtra("EMAIL_ONG");
 
-        // ------------ Bind das views ------------
-        fotoLogo     = findViewById(R.id.foto_logo);
-        txtNome      = findViewById(R.id.nome_ong);
-        txtEndereco  = findViewById(R.id.endereco);
-        txtTelefone  = findViewById(R.id.telefone);
-        txtInstagram = findViewById(R.id.instagram);
-        txtPix1      = findViewById(R.id.pix1);
-        txtPix2      = findViewById(R.id.pix2);
+        /* Views */
+        foto    = findViewById(R.id.foto_logo);
+        nome_ong     = findViewById(R.id.nome_ong);
+        endereco = findViewById(R.id.endereco);
+        telefone_1 = findViewById(R.id.telefone);
+        insta= findViewById(R.id.instagram);
+        pix_1     = findViewById(R.id.pix1);
+        pix_2     = findViewById(R.id.pix2);
 
-        gridAnimais    = findViewById(R.id.grid_animais);
-        botaoAdicionar = findViewById(R.id.botao_adicionar_animal);
-        botaoEditar    = findViewById(R.id.botao_editar_info);
+        grid   = findViewById(R.id.grid_animais);
+        fabAdd = findViewById(R.id.botao_adicionar_animal);
+        btnEdit= findViewById(R.id.botao_editar_info);
 
-        db           = new DatabaseHelper(this);
-        listaAnimais = db.buscarAnimais(emailOng);
-        adapter      = new GridAnimalAdapter(this, listaAnimais);
-        gridAnimais.setAdapter(adapter);
+        /* Banco e adapter */
+        db = new DatabaseHelper(this);
+        lista.addAll(db.buscarAnimais(emailOng));                // dados iniciais
+        adapter = new GridAnimalAdapter(this, lista, this);      // 'this' = listener
+        grid.setAdapter(adapter);
 
-        // ----------- BOTÕES ------------
-        botaoAdicionar.setOnClickListener(v -> {
-            Intent it = new Intent(this, cadastro_animal.class);
-            it.putExtra("EMAIL_ONG", emailOng);
-            startActivity(it);
-        });
+        /* Botões */
+        fabAdd.setOnClickListener(v ->
+                startActivity(new Intent(this, cadastro_animal.class)
+                        .putExtra("EMAIL_ONG", emailOng))
+        );
 
-        botaoEditar.setOnClickListener(v -> {
-            Intent it = new Intent(this, info_ong.class);
-            it.putExtra("EMAIL_ONG", emailOng);
-            startActivity(it);
-        });
+        btnEdit.setOnClickListener(v ->
+                startActivity(new Intent(this, info_ong.class)
+                        .putExtra("EMAIL_ONG", emailOng))
+        );
 
-        gridAnimais.setOnItemClickListener((parent, view, position, id) -> {
-            Animal a = listaAnimais.get(position);
-            Intent it = new Intent(this, ItemAnimalActivity.class);
-            it.putExtra("ID_ANIMAL", a.id);
-            startActivity(it);
-        });
+        grid.setOnItemClickListener((p, v, pos, id) ->
+                startActivity(new Intent(this, ItemAnimalActivity.class)
+                        .putExtra("ID_ANIMAL", (int) id))
+        );
 
-        // Primeira carga de informações da ONG
-        atualizarCardInfo();
+        atualizarCard();        // preenche dados da ONG
     }
 
-    // ------------------------------------------------------------------
-    // SEMPRE que voltamos para esta Activity, recarrega dados atualizados
-    // ------------------------------------------------------------------
     @Override
     protected void onResume() {
         super.onResume();
-
-        // 1) Card superior
-        atualizarCardInfo();
-
-        // 2) Grade de animais
-        listaAnimais.clear();
-        listaAnimais.addAll(db.buscarAnimais(emailOng));
-        adapter.notifyDataSetChanged();
+        atualizarCard();        // se mexeu nas infos, atualiza
+        recarregarGrid();       // se adicionou / removeu animal, atualiza grid
     }
 
-    // ---------------- Atualiza o card a partir do Banco ----------------
-    private void atualizarCardInfo() {
-        InfoOng info = db.buscarInfoOng(emailOng);
-        if (info == null) return;  // ainda não cadastrou nada
+    /* ---------- Atualiza dados da ONG ---------- */
 
-        txtNome.setText     (info.nome_ong);
-        txtEndereco.setText (info.endereco);
-        txtTelefone.setText (info.telefone_1);
-        txtInstagram.setText(info.insta);
-        txtPix1.setText     (info.pix_1);
-        txtPix2.setText     (info.telefone_2);  // se quiser mostrar um 2º Pix, basta ajustar
+    private void atualizarCard() {
+        InfoOng i = db.buscarInfoOng(emailOng);
+        if (i == null) return;
 
-        if (info.foto != null)
-            fotoLogo.setImageBitmap(BitmapFactory.decodeByteArray(
-                    info.foto, 0, info.foto.length));
+        nome_ong.setText(i.getNome());
+        endereco.setText(i.getEndereco());
+        telefone_1.setText(i.getTelefone1());
+        insta.setText(i.getInstagram());
+        pix_1.setText(i.getPix1());
+        pix_2.setText(i.getPix2());
+
+        if (i.getFoto() != null)
+            foto.setImageBitmap(
+                    BitmapFactory.decodeByteArray(i.getFoto(), 0, i.getFoto().length)
+            );
+    }
+
+    /* ---------- Atualiza grid de animais ---------- */
+
+    private void recarregarGrid() {
+        lista.clear();
+        lista.addAll(db.buscarAnimais(emailOng));
+        if (adapter != null) adapter.notifyDataSetChanged();
+    }
+
+    /* ---------- Callback de exclusão ---------- */
+
+    @Override
+    public void onDelete(Animal a) {
+        new AlertDialog.Builder(this)
+                .setTitle("Excluir animal")
+                .setMessage("Tem certeza que deseja excluir \"" + a.nome + "\"?")
+                .setPositiveButton("Excluir", (d, w) -> {
+                    db.excluirAnimal(a.id);
+                    Toast.makeText(this, "Animal excluído.", Toast.LENGTH_SHORT).show();
+                    recarregarGrid();
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }

@@ -42,6 +42,7 @@
     <string name="pix2_formatado">Pix (e-mail): ong@gmail.com</string>
     <string name="editar_informacoes">Editar informações da ONG</string>
     <string name="adicionar_animal">Adicionar novo animal</string>
+    <string name="excluir" />
 
 
 </resources>

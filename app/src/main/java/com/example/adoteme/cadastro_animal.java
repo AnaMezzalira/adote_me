@@ -122,7 +122,7 @@ public class cadastro_animal extends AppCompatActivity {
 
         // Validações mínimas
         if (nome.getText().toString().trim().isEmpty() ||
-                idade.getText().toString().trim().isEmpty()||
+                idade.getText().toString().trim().isEmpty() ||
                 sexo.getSelectedItemPosition()==0 ||
                 castrado.getSelectedItemPosition()==0) {
             Toast.makeText(this,"Preencha os campos obrigatórios",Toast.LENGTH_SHORT).show();
@@ -152,14 +152,18 @@ public class cadastro_animal extends AppCompatActivity {
                 fotosValidas
         );
 
-        if (ok){
-            Toast.makeText(this,"Animal cadastrado!",Toast.LENGTH_SHORT).show();
+        if (ok) {
+            Toast.makeText(this, "Animal cadastrado!", Toast.LENGTH_SHORT).show();
+            Intent it = new Intent(this, perfil_ong.class);
+            it.putExtra("EMAIL_ONG", emailDaOng);
+            startActivity(it);
             finish();
-        }else{
-            Log.e("DB","Falha ao inserir animal (cheque Logcat)");
-            Toast.makeText(this,"Erro ao salvar",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Erro ao salvar", Toast.LENGTH_SHORT).show();
         }
+
     }
+
 
     private byte[] bmpToBytes(Bitmap b){
         ByteArrayOutputStream out = new ByteArrayOutputStream();
