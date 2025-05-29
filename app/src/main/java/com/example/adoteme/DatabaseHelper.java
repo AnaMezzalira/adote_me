@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "AdoteMe.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 2;   // se mudar estrutura => ++
 
     public DatabaseHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "foto      BLOB)"
         );
 
-        // Animais
+        // Animais (até 4 fotos)
         db.execSQL(
                 "CREATE TABLE animais (" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -64,7 +64,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "raca      TEXT," +
                         "vacina    TEXT," +
                         "condicoes TEXT," +
-                        "foto1 BLOB, foto2 BLOB, foto3 BLOB, foto4 BLOB)"
+                        "foto1 BLOB," +
+                        "foto2 BLOB," +
+                        "foto3 BLOB," +
+                        "foto4 BLOB)"
         );
     }
 
@@ -112,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        // verifica se já existe registro para este e‑mail
+        // existe registro para este e-mail?
         Cursor c = db.rawQuery("SELECT id FROM info_ong WHERE email=?", new String[]{email});
         boolean existe = c.moveToFirst();
         c.close();
@@ -128,12 +131,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         v.put("pix2",      pix2);
         v.put("foto",      foto);
 
-        long res;
-        if (existe) {
-            res = db.update("info_ong", v, "email=?", new String[]{email});
-        } else {
-            res = db.insert("info_ong", null, v);
-        }
+        long res = existe
+                ? db.update("info_ong", v, "email=?", new String[]{email})
+                : db.insert("info_ong", null, v);
+
         return res != -1;
     }
 
@@ -176,41 +177,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         v.put("raca",      raca);
         v.put("vacina",    vacina);
         v.put("condicoes", condicoes);
-        for (int i = 0; i < fotos.size() && i < 4; i++)
+
+        for (int i = 0; i < fotos.size() && i < 4; i++)        // salva foto1 … foto4
             v.put("foto" + (i + 1), fotos.get(i));
 
         try {
             getWritableDatabase().insertOrThrow("animais", null, v);
             return true;
-        } catch (Exception e) {          // ← mostra erro real
+        } catch (Exception e) {
             Log.e("DB_INSERIR_ANIMAL", "SQLException", e);
             return false;
         }
     }
 
-
+    /** Busca animais da ONG (traz foto1 para exibir no grid). */
     public List<Animal> buscarAnimais(String email) {
 
         List<Animal> lista = new ArrayList<>();
 
-        /* traga exatamente as colunas que o construtor precisa */
         Cursor c = getReadableDatabase().rawQuery(
-                "SELECT id, nome, foto1, idade, raca, vacina, sexo, castrado, condicoes " +
+                // SELECIONE TODAS as colunas de foto que o construtor precisa
+                "SELECT id, nome, foto1, foto2, foto3, foto4, " +
+                        "       idade, raca, vacina, sexo, castrado, condicoes " +
                         "FROM   animais WHERE email_ong=?",
                 new String[]{ email }
         );
 
         while (c.moveToNext()) {
             lista.add(new Animal(
-                    c.getInt   (c.getColumnIndexOrThrow("id")),        // 1  id
-                    c.getString(c.getColumnIndexOrThrow("nome")),      // 2  nome
-                    c.getBlob  (c.getColumnIndexOrThrow("foto1")),     // 3  foto1 (BLOB)
-                    c.getString(c.getColumnIndexOrThrow("idade")),     // 4  idade
-                    c.getString(c.getColumnIndexOrThrow("raca")),      // 5  raca
-                    c.getString(c.getColumnIndexOrThrow("vacina")),    // 6  vacina
-                    c.getString(c.getColumnIndexOrThrow("sexo")),      // 7  sexo
-                    c.getString(c.getColumnIndexOrThrow("castrado")),  // 8  castrado
-                    c.getString(c.getColumnIndexOrThrow("condicoes"))  // 9  condicoes  ← faltava
+                    c.getInt   (c.getColumnIndexOrThrow("id")),      // 1 id
+                    c.getString(c.getColumnIndexOrThrow("nome")),    // 2 nome
+                    c.getBlob  (c.getColumnIndexOrThrow("foto1")),   // 3 foto1
+                    c.getBlob  (c.getColumnIndexOrThrow("foto2")),   // 4 foto2
+                    c.getBlob  (c.getColumnIndexOrThrow("foto3")),   // 5 foto3
+                    c.getBlob  (c.getColumnIndexOrThrow("foto4")),   // 6 foto4
+                    c.getString(c.getColumnIndexOrThrow("idade")),   // 7 idade
+                    c.getString(c.getColumnIndexOrThrow("raca")),    // 8 raca
+                    c.getString(c.getColumnIndexOrThrow("vacina")),  // 9 vacina
+                    c.getString(c.getColumnIndexOrThrow("sexo")),    // 10 sexo
+                    c.getString(c.getColumnIndexOrThrow("castrado")),// 11 castrado
+                    c.getString(c.getColumnIndexOrThrow("condicoes"))// 12 condicoes
             ));
         }
         c.close();
@@ -218,12 +224,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     public boolean excluirAnimal(int id) {
         return getWritableDatabase()
                 .delete("animais", "id=?", new String[]{ String.valueOf(id) }) > 0;
     }
 
+    /** Pega todas as infos (até 4 fotos) de um animal específico. */
     public AnimalCompleto buscarAnimalPorId(int id) {
         Cursor c = getReadableDatabase().rawQuery(
                 "SELECT * FROM animais WHERE id=? LIMIT 1",
@@ -250,5 +256,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return a;
     }
 
+    public List<Ong> buscarTodasOngs() {
+        List<Ong> ongs = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nome, email, estado FROM ongs ORDER BY nome ASC", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String nome   = cursor.getString(0);
+                String email  = cursor.getString(1);
+                String estado = cursor.getString(2);
+                ongs.add(new Ong(nome, email, estado));
+            } while (cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        db.close();
+        return ongs;
+    }
 
 }

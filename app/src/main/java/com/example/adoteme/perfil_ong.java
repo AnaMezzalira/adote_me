@@ -1,10 +1,11 @@
 package com.example.adoteme;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.widget.GridView;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +25,8 @@ public class perfil_ong extends AppCompatActivity
     private ImageView foto;
     private TextView  nome_ong, endereco, telefone_1,
             insta, pix_1, pix_2;
-    private GridView grid;
+    /** Grid que “cresce” até exibir todas as linhas */
+    private ExpandableHeightGridView grid;
     private FloatingActionButton fabAdd;
     private ImageButton btnEdit;
 
@@ -33,33 +35,39 @@ public class perfil_ong extends AppCompatActivity
     private GridAnimalAdapter adapter;
     private String emailOng;
 
-    /* ---------- Ciclo de vida ---------- */
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.activity_perfil_ong);
 
-        /* e-mail enviado pela tela de login */
+        /* e-mail enviado pela tela de login ou catálogo */
         emailOng = getIntent().getStringExtra("EMAIL_ONG");
 
         /* Views */
-        foto    = findViewById(R.id.foto_logo);
-        nome_ong     = findViewById(R.id.nome_ong);
-        endereco = findViewById(R.id.endereco);
+        foto       = findViewById(R.id.foto_logo);
+        nome_ong   = findViewById(R.id.nome_ong);
+        endereco   = findViewById(R.id.endereco);
         telefone_1 = findViewById(R.id.telefone);
-        insta= findViewById(R.id.instagram);
-        pix_1     = findViewById(R.id.pix1);
-        pix_2     = findViewById(R.id.pix2);
+        insta      = findViewById(R.id.instagram);
+        pix_1      = findViewById(R.id.pix1);
+        pix_2      = findViewById(R.id.pix2);
 
         grid   = findViewById(R.id.grid_animais);
         fabAdd = findViewById(R.id.botao_adicionar_animal);
         btnEdit= findViewById(R.id.botao_editar_info);
 
+        /* Verifica se é modo leitura (adotante) */
+        boolean modoLeitura = getIntent().getBooleanExtra("modo_leitura", false);
+        if (modoLeitura) {
+            fabAdd.setVisibility(View.GONE);
+            btnEdit.setVisibility(View.GONE);
+        }
+
         /* Banco e adapter */
         db = new DatabaseHelper(this);
-        lista.addAll(db.buscarAnimais(emailOng));                // dados iniciais
-        adapter = new GridAnimalAdapter(this, lista, this);      // 'this' = listener
+        lista.addAll(db.buscarAnimais(emailOng));
+        adapter = new GridAnimalAdapter(this, lista, this);
         grid.setAdapter(adapter);
 
         /* Botões */
@@ -78,18 +86,26 @@ public class perfil_ong extends AppCompatActivity
                         .putExtra("ID_ANIMAL", (int) id))
         );
 
-        atualizarCard();        // preenche dados da ONG
+        atualizarCard();
+
+        emailOng = getIntent().getStringExtra("EMAIL_ONG");
+
+        if (emailOng == null || emailOng.isEmpty()) {
+            Toast.makeText(this, "EMAIL_ONG está nulo ou vazio", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        atualizarCard();        // se mexeu nas infos, atualiza
-        recarregarGrid();       // se adicionou / removeu animal, atualiza grid
+        atualizarCard();
+        recarregarGrid();
     }
 
-    /* ---------- Atualiza dados da ONG ---------- */
-
+    /* Atualiza dados da ONG */
     private void atualizarCard() {
         InfoOng i = db.buscarInfoOng(emailOng);
         if (i == null) return;
@@ -102,21 +118,17 @@ public class perfil_ong extends AppCompatActivity
         pix_2.setText(i.getPix2());
 
         if (i.getFoto() != null)
-            foto.setImageBitmap(
-                    BitmapFactory.decodeByteArray(i.getFoto(), 0, i.getFoto().length)
-            );
+            foto.setImageBitmap(BitmapFactory.decodeByteArray(i.getFoto(), 0, i.getFoto().length));
     }
 
-    /* ---------- Atualiza grid de animais ---------- */
-
+    /* Atualiza grid de animais */
     private void recarregarGrid() {
         lista.clear();
         lista.addAll(db.buscarAnimais(emailOng));
         if (adapter != null) adapter.notifyDataSetChanged();
     }
 
-    /* ---------- Callback de exclusão ---------- */
-
+    /* Callback de exclusão */
     @Override
     public void onDelete(Animal a) {
         new AlertDialog.Builder(this)
@@ -130,4 +142,6 @@ public class perfil_ong extends AppCompatActivity
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
+
+
 }

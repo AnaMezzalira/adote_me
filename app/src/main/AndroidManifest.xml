@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AdoteMe"
         tools:targetApi="31">
+        <activity android:name=".ListaOngsActivity" />
+        <activity android:name=".CatalogoOngActivity"/>
         <activity
             android:name=".item_animal"
             android:exported="false"
@@ -32,9 +34,6 @@
             android:name=".login_ong"
             android:exported="false" />
         <activity
-            android:name=".Adotante"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -43,9 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ItemAnimalActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
+
 </manifest>

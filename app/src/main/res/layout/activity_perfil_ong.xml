@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- SCROLL PRINCIPAL -->
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
@@ -87,7 +88,6 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Substitua o botão de edição por este -->
                 <ImageButton
                     android:id="@+id/botao_editar_info"
                     android:layout_width="50dp"
@@ -101,19 +101,20 @@
 
             </RelativeLayout>
 
-            <!-- GRID DOS ANIMAIS -->
-            <GridView
+            <!-- GRID DOS ANIMAIS (view custom que expande a altura) -->
+            <com.example.adoteme.ExpandableHeightGridView
                 android:id="@+id/grid_animais"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:focusable="false"
                 android:horizontalSpacing="8dp"
                 android:isScrollContainer="false"
+                android:nestedScrollingEnabled="false"
                 android:numColumns="3"
                 android:scrollbars="none"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" />
+                android:verticalSpacing="2dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -130,4 +131,5 @@
         android:contentDescription="@string/adicionar_animal"
         android:tint="@color/white"
         app:backgroundTint="@color/botao" />
+
 </RelativeLayout>

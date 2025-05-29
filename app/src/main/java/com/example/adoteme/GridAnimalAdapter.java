@@ -1,9 +1,10 @@
 package com.example.adoteme;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.core.content.ContextCompat;
 import java.util.List;
 
 /** Adapter do GridView na tela de perfil da ONG (cell = item_animal.xml). */
@@ -24,12 +25,14 @@ public class GridAnimalAdapter extends BaseAdapter {
     private final List<Animal>           animais;
     private final OnAnimalDeleteListener listener;
     private final LayoutInflater         inflater;
+    private final Drawable               placeholder;   // 1x carregado
 
     public GridAnimalAdapter(Context c, List<Animal> list, OnAnimalDeleteListener l) {
-        this.ctx      = c;
-        this.animais  = list;
-        this.listener = l;
-        this.inflater = LayoutInflater.from(c);
+        this.ctx         = c;
+        this.animais     = list;
+        this.listener    = l;
+        this.inflater    = LayoutInflater.from(c);
+        this.placeholder = ContextCompat.getDrawable(c, R.drawable.logo);
     }
 
     @Override public int    getCount()         { return animais.size(); }
@@ -46,7 +49,6 @@ public class GridAnimalAdapter extends BaseAdapter {
         byte[][]     fotos;          // até 4 fotos
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int pos, View convert, ViewGroup parent) {
         VH h;
@@ -85,7 +87,9 @@ public class GridAnimalAdapter extends BaseAdapter {
         h.cond .setText("Condições médicas: " + a.condicoes_medicas());
 
         /* ---------- Fotos ---------- */
-        h.fotos   = new byte[][]{ a.foto1(), a.foto2(), a.foto3(), a.foto4() };
+        h.fotos = new byte[][]{
+                a.foto1(), a.foto2(), a.foto3(), a.foto4()
+        };
         h.idxFoto = 0;
         mostrarFoto(h);
 
@@ -101,7 +105,7 @@ public class GridAnimalAdapter extends BaseAdapter {
         /* ---------- Clique na célula → ItemAnimalActivity ---------- */
         convert.setOnClickListener(v -> {
             Intent i = new Intent(ctx, ItemAnimalActivity.class);
-            i.putExtra("ID_ANIMAL", a.id);     // mesma chave usada na Activity
+            i.putExtra("ID_ANIMAL", a.id);
             ctx.startActivity(i);
         });
 
@@ -113,13 +117,15 @@ public class GridAnimalAdapter extends BaseAdapter {
         return convert;
     }
 
-    /* Helper: exibe a foto atual ou placeholder */
+    /* Helper: exibe a foto atual ou placeholder (usa Glide) */
     private void mostrarFoto(VH h) {
         byte[] foto = h.fotos[h.idxFoto];
-        if (foto != null) {
-            h.foto.setImageBitmap(BitmapFactory.decodeByteArray(foto, 0, foto.length));
+        if (foto != null && foto.length > 0) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(foto, 0, foto.length);
+            h.foto.setImageBitmap(bmp);
         } else {
-            h.foto.setImageResource(R.drawable.logo);  // placeholder
+            h.foto.setImageResource(R.drawable.logo);
         }
+
     }
 }

@@ -43,6 +43,9 @@
     <string name="editar_informacoes">Editar informações da ONG</string>
     <string name="adicionar_animal">Adicionar novo animal</string>
     <string name="excluir" />
-
+    <string name="lista_animais">lista_animais</string>
 
 </resources>
+
+
+

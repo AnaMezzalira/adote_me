@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void abrirAdotante(){
         //abrir outra activity
-        Intent intent = new Intent(this, Adotante.class);
+        Intent intent = new Intent(this, ListaOngsActivity.class);
         startActivity(intent);
 
     }
