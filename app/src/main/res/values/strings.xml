@@ -45,6 +45,12 @@
     <string name="excluir" />
     <string name="lista_animais">lista_animais</string>
 
+    <string name="selecione_estado">Estado</string>
+
+    <string name="Sexo">Sexo</string>
+
+    <string name="Castrado">Castrado</string>
+
 </resources>
 
 

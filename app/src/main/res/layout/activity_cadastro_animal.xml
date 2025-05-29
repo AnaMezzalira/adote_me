@@ -32,6 +32,7 @@
             android:id="@+id/nome_animal"
             style="@style/edit_text"
             android:hint="Nome do animal"
+            android:inputType="textEmailAddress"
             android:paddingStart="10dp"
             android:layout_width="350dp"
             android:layout_height="50dp"
@@ -44,6 +45,7 @@
         <EditText
             android:id="@+id/idade_animal"
             style="@style/edit_text"
+            android:inputType="textEmailAddress"
             android:hint="Idade do animal"
             android:paddingStart="10dp"
             android:layout_width="350dp"
@@ -57,6 +59,7 @@
         <Spinner
             android:id="@+id/sexo"
             style="@style/edit_text"
+            android:prompt="@string/Sexo"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="300dp"
@@ -70,6 +73,7 @@
             android:id="@+id/raca"
             style="@style/edit_text"
             android:hint="Raça"
+            android:inputType="textEmailAddress"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="400dp"
@@ -97,6 +101,7 @@
         <Spinner
             android:id="@+id/castrado"
             style="@style/edit_text"
+            android:prompt="@string/Castrado"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="600dp"
@@ -190,6 +195,24 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Sexo"
+            app:layout_constraintBottom_toTopOf="@+id/sexo"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="30dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Castrado"
+            app:layout_constraintBottom_toTopOf="@+id/castrado"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="30dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

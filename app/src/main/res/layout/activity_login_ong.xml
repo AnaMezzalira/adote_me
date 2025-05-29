@@ -47,7 +47,7 @@
             style="@style/edit_text"
             android:hint="Senha"
             android:paddingStart="10dp"
-            android:inputType="textEmailAddress"
+            android:inputType="textWebPassword"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginTop="300dp"
@@ -79,8 +79,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="350dp"
             android:layout_marginBottom="100dp"
-
-            android:backgroundTint="@color/white"
+            android:background="@drawable/botao_arredondado"
             android:text="Cadastre-se"
             android:textColor="@color/botao"
             app:layout_constraintBottom_toBottomOf="parent"
